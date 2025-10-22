@@ -75,6 +75,15 @@ jobs:
         export BUILDOZER_GLOBAL_DIR="$(pwd)/.buildozer_global"
         mkdir -p $BUILDOZER_GLOBAL_DIR
         
+        # 设置环境变量以自动接受许可证
+        export ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk
+        export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+        
+        # 自动接受Android SDK许可证
+        mkdir -p $ANDROID_HOME/licenses
+        echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > $ANDROID_HOME/licenses/android-sdk-license
+        echo "84831b9409646a918e30573bab4c9c91346d8abd" > $ANDROID_HOME/licenses/android-sdk-preview-license
+        
         # 构建APK
         buildozer android debug
         
