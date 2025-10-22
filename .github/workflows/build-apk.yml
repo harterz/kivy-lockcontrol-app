@@ -43,7 +43,6 @@ jobs:
           libdb-dev \
           liblzma-dev \
           libexpat1-dev \
-          libmpdec3 \
           zip \
           unzip \
           openjdk-8-jdk
