@@ -90,6 +90,7 @@ jobs:
         # 手动安装cmdline-tools如果不存在
         if [ ! -d "$ANDROID_HOME/cmdline-tools" ]; then
           echo "Installing Android cmdline-tools..."
+          mkdir -p $ANDROID_HOME
           cd $ANDROID_HOME
           wget -q https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
           unzip -q commandlinetools-linux-9477386_latest.zip
@@ -101,6 +102,10 @@ jobs:
         
         # 更新PATH以包含新的cmdline-tools
         export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+        
+        # 使用sdkmanager安装必要的SDK组件
+        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+        $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3" || true
         
         # 再次尝试构建APK
         buildozer android debug
