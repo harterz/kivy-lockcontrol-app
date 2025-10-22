@@ -20,6 +20,12 @@ jobs:
       with:
         python-version: '3.9'
         
+    - name: Set up Java 11
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '11'
+        
     - name: Install system dependencies
       run: |
         sudo apt-get update
@@ -44,13 +50,7 @@ jobs:
           liblzma-dev \
           libexpat1-dev \
           zip \
-          unzip \
-          openjdk-8-jdk
-          
-    - name: Set JAVA_HOME
-      run: |
-        echo "JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> $GITHUB_ENV
-        echo "/usr/lib/jvm/java-8-openjdk-amd64/bin" >> $GITHUB_PATH
+          unzip
         
     - name: Install Python dependencies
       run: |
