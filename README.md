@@ -1,4 +1,64 @@
-# 智能门锁控制器
+# Kivy锁控制应用程序
+
+一个基于Kivy的锁控制应用程序，支持桌面和Android平台。
+
+## 项目结构
+
+- `main_minimal.py` - 最简化的Kivy应用程序
+- `buildozer.spec` - Android APK构建配置文件
+- `requirements.txt` - Python依赖包列表
+- `Dockerfile` - Docker构建环境配置
+- `build_apk.sh` - 自动化APK构建脚本
+- `.github/workflows/build-apk.yml` - GitHub Actions自动构建配置
+
+## 构建APK的方法
+
+### 方法1：GitHub Actions自动构建（推荐）
+
+1. 推送代码到GitHub仓库
+2. GitHub Actions会自动触发构建
+3. 构建完成后，在Actions页面下载APK文件
+
+### 方法2：Docker构建
+
+```bash
+# 确保已安装Docker
+docker --version
+
+# 运行构建脚本
+chmod +x build_apk.sh
+./build_apk.sh
+```
+
+### 方法3：本地构建
+
+```bash
+# 安装依赖
+pip install buildozer cython
+
+# 构建APK
+buildozer android debug
+```
+
+## 运行桌面版本
+
+```bash
+# 安装依赖
+pip install kivy
+
+# 运行应用
+python main_minimal.py
+```
+
+## 注意事项
+
+- 本地构建需要配置Android SDK和Java环境
+- 推荐使用GitHub Actions进行自动构建
+- Docker构建需要较大的磁盘空间（约2-3GB）
+
+## 许可证
+
+MIT License
 
 这是一个智能门锁控制应用程序，提供了桌面版本作为替代解决方案。
 
