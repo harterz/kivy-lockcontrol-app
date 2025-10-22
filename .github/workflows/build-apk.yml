@@ -87,10 +87,12 @@ jobs:
         # 初始化buildozer以下载和设置Android SDK
         buildozer android debug --verbose || true
         
+        # 确保Android SDK目录存在
+        mkdir -p $ANDROID_HOME
+        
         # 手动安装cmdline-tools如果不存在
         if [ ! -d "$ANDROID_HOME/cmdline-tools" ]; then
           echo "Installing Android cmdline-tools..."
-          mkdir -p $ANDROID_HOME
           cd $ANDROID_HOME
           wget -q https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
           unzip -q commandlinetools-linux-9477386_latest.zip
@@ -100,8 +102,12 @@ jobs:
           cd -
         fi
         
-        # 更新PATH以包含新的cmdline-tools
-        export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+        # 创建旧版本sdkmanager的符号链接以兼容buildozer
+        mkdir -p $ANDROID_HOME/tools/bin
+        ln -sf $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager $ANDROID_HOME/tools/bin/sdkmanager
+        
+        # 更新PATH以包含新的cmdline-tools和旧路径
+        export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/tools/bin
         
         # 使用sdkmanager安装必要的SDK组件
         yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
