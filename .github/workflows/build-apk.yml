@@ -77,14 +77,32 @@ jobs:
         
         # 设置环境变量以自动接受许可证
         export ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk
-        export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+        export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin
         
         # 自动接受Android SDK许可证
         mkdir -p $ANDROID_HOME/licenses
         echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > $ANDROID_HOME/licenses/android-sdk-license
         echo "84831b9409646a918e30573bab4c9c91346d8abd" > $ANDROID_HOME/licenses/android-sdk-preview-license
         
-        # 构建APK
+        # 初始化buildozer以下载和设置Android SDK
+        buildozer android debug --verbose || true
+        
+        # 手动安装cmdline-tools如果不存在
+        if [ ! -d "$ANDROID_HOME/cmdline-tools" ]; then
+          echo "Installing Android cmdline-tools..."
+          cd $ANDROID_HOME
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+          unzip -q commandlinetools-linux-9477386_latest.zip
+          mkdir -p cmdline-tools/latest
+          mv cmdline-tools/* cmdline-tools/latest/ 2>/dev/null || true
+          rm -f commandlinetools-linux-9477386_latest.zip
+          cd -
+        fi
+        
+        # 更新PATH以包含新的cmdline-tools
+        export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+        
+        # 再次尝试构建APK
         buildozer android debug
         
     - name: Upload APK artifact

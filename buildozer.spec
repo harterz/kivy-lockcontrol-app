@@ -54,7 +54,7 @@ android.sdk = 30
 android.archs = arm64-v8a, armeabi-v7a
 
 # (str) Bootstrap to use for android builds
-android.bootstrap = sdl2
+p4a.bootstrap = sdl2
 
 # (bool) enables Android auto backup feature (Android API >=23)
 android.allow_backup = True
