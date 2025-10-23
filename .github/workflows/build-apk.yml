@@ -16,9 +16,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
         
-    - name: Install Python dependencies
+    - name: Install pip and Python dependencies
       run: |
-        python3 -m pip install --upgrade pip
+        curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+        python3 get-pip.py
         python3 -m pip install buildozer cython
         
     - name: Build APK
