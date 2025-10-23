@@ -48,6 +48,9 @@ android.minapi = 21
 android.ndk = 25b
 
 # (str) Android arch to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
+
+# (bool) Accept Android SDK license
+android.accept_sdk_license = True
 android.archs = arm64-v8a, armeabi-v7a
 
 # (str) Bootstrap to use for android builds
